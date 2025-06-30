@@ -31,11 +31,4 @@ export default function HomePage() {
 
     checkUserStatus();
   }, [router]);
-
-  return (
-    <div style={{ padding: "40px", textAlign: "center" }}>
-      <h1>📖 أهلا بيك في موقع حجز مهرجان الكرازة</h1>
-      <p>دي الصفحة الرئيسية... (لسه هنكمل تصميمها قريب 😊)</p>
-    </div>
-  );
 }
