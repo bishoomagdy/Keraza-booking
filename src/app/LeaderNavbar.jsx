@@ -1,4 +1,3 @@
-// ✅ File: app/leader/LeaderNavbar.jsx
 "use client";
 
 import Link from "next/link";
@@ -8,6 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 
 export default function LeaderNavbar() {
+  const [showNavbar, setShowNavbar] = useState(false);
   const [role, setRole] = useState(null);
 
   useEffect(() => {
@@ -16,13 +16,20 @@ export default function LeaderNavbar() {
         const userDoc = await getDoc(doc(db, "leaders", user.uid));
         if (userDoc.exists()) {
           const data = userDoc.data();
-          setRole(data.role);
+
+          // ✅ لو Admin أو خادم Approved
+          if (data.role === "admin" || data.approved === true) {
+            setRole(data.role);
+            setShowNavbar(true);
+          }
         }
       }
     });
 
     return () => unsubscribe();
   }, []);
+
+  if (!showNavbar) return null; // 🚫 مش هيظهر حاجة لو المستخدم مش مؤهل
 
   return (
     <>
