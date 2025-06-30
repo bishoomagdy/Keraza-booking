@@ -1,6 +1,3 @@
-*{
-  z-index: 1000;
-}
 .leader-layout {
   display: flex;
   flex-direction: column;
@@ -17,6 +14,8 @@
   padding: 12px 0;
   color: white;
   font-weight: bold;
+  z-index: 100; /* مستوى أعلى من المحتوى */
+  position: relative;
 }
 
 .leader-nav-top a {
@@ -42,7 +41,7 @@
   width: 100%;
   color: white;
   font-weight: bold;
-  z-index: 43543564589347584375983457984375893;
+  z-index: 200; /* أعلى من أي حاجة تانية */
 }
 
 .leader-nav-bottom a {
@@ -50,7 +49,6 @@
   text-decoration: none;
   padding: 8px 12px;
   transition: all 0.3s ease;
-  z-index: 43543564589347584375983457984375899;
 }
 
 .leader-nav-bottom a:hover {
@@ -62,4 +60,6 @@
   flex-grow: 1;
   padding: 20px;
   padding-bottom: 80px; /* علشان ما يغطّيش الشريط السفلي المحتوى */
+  z-index: 1;
+  position: relative;
 }

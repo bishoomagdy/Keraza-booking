@@ -7,7 +7,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 
 export default function LeaderNavbar() {
-  const [showNavbar, setShowNavbar] = useState(false);
   const [role, setRole] = useState(null);
 
   useEffect(() => {
@@ -16,11 +15,8 @@ export default function LeaderNavbar() {
         const userDoc = await getDoc(doc(db, "leaders", user.uid));
         if (userDoc.exists()) {
           const data = userDoc.data();
-
-          // ✅ لو Admin أو خادم Approved
           if (data.role === "admin" || data.approved === true) {
             setRole(data.role);
-            setShowNavbar(true);
           }
         }
       }
@@ -29,7 +25,7 @@ export default function LeaderNavbar() {
     return () => unsubscribe();
   }, []);
 
-  if (!showNavbar) return null; // 🚫 مش هيظهر حاجة لو المستخدم مش مؤهل
+  if (role === null) return null;
 
   return (
     <>
