@@ -1,0 +1,64 @@
+*{
+  z-index: 1000;
+}
+.leader-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Cairo", sans-serif;
+  background: #f5f9ff;
+}
+
+/* الشريط العلوي */
+.leader-nav-top {
+  display: flex;
+  justify-content: space-around;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  padding: 12px 0;
+  color: white;
+  font-weight: bold;
+}
+
+.leader-nav-top a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+}
+
+.leader-nav-top a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+/* الشريط السفلي */
+.leader-nav-bottom {
+  display: flex;
+  justify-content: space-around;
+  background: #1e2a38;
+  padding: 10px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  z-index: 43543564589347584375983457984375893;
+}
+
+.leader-nav-bottom a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+}
+
+.leader-nav-bottom a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.leader-content {
+  flex-grow: 1;
+  padding: 20px;
+  padding-bottom: 80px; /* علشان ما يغطّيش الشريط السفلي المحتوى */
+}
