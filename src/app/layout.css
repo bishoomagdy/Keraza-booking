@@ -1,20 +1,34 @@
+/* قاعدة عامة تخلي الـ padding والـ border ما يكبروش الـ width */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 .leader-layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   font-family: "Cairo", sans-serif;
   background: #f5f9ff;
+  overflow-x: hidden;
 }
 
 /* الشريط العلوي */
 .leader-nav-top {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   background: linear-gradient(to right, #6a11cb, #2575fc);
   padding: 12px 0;
   color: white;
   font-weight: bold;
-  z-index: 100; /* مستوى أعلى من المحتوى */
+  z-index: 100;
   position: relative;
 }
 
@@ -23,6 +37,7 @@
   text-decoration: none;
   padding: 8px 12px;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .leader-nav-top a:hover {
@@ -33,6 +48,7 @@
 /* الشريط السفلي */
 .leader-nav-bottom {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   background: #1e2a38;
   padding: 10px 0;
@@ -41,7 +57,7 @@
   width: 100%;
   color: white;
   font-weight: bold;
-  z-index: 200; /* أعلى من أي حاجة تانية */
+  z-index: 200;
 }
 
 .leader-nav-bottom a {
@@ -49,6 +65,7 @@
   text-decoration: none;
   padding: 8px 12px;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .leader-nav-bottom a:hover {
@@ -59,7 +76,8 @@
 .leader-content {
   flex-grow: 1;
   padding: 20px;
-  padding-bottom: 80px; /* علشان ما يغطّيش الشريط السفلي المحتوى */
-  z-index: 1;
+  padding-bottom: 80px;
   position: relative;
+  width: 100%;
+  overflow-x: hidden;
 }
