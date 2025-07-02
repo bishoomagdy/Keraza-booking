@@ -18,7 +18,75 @@ const COLORS = [
   "#b455f0", "#e35f5f", "#40a965", "#f58f00"
 ];
 
-const competitionNamesInArabic = { /* نفس اللي كان موجود */ };
+const competitionNamesInArabic = {
+  "festival_subscription": "إشتراك حجز المهرجان للكنيسة (إلزامى)",
+  "rouhi_alex_kindergarten_1": "مرحلة حضانة - الفريق الأول",
+  "rouhi_alex_grade1_2_1": "مرحلة أولى وثانية ابتدائي - الفريق الأول",
+  "rouhi_alex_grade3_4_1": "مرحلة ثالثة ورابعة ابتدائي - الفريق الأول",
+  "rouhi_alex_grade5_6_1": "مرحلة خامسة وسادسة ابتدائي - الفريق الأول",
+  "rouhi_alex_kindergarten_extra": "مرحلة حضانة - الفريق الإضافي",
+  "rouhi_alex_grade1_2_extra": "مرحلة أولى وثانية ابتدائي - الفريق الإضافي",
+  "rouhi_alex_grade3_4_extra": "مرحلة ثالثة ورابعة ابتدائي - الفريق الإضافي",
+  "rouhi_alex_grade5_6_extra": "مرحلة خامسة وسادسة ابتدائي - الفريق الإضافي",
+  "melodies_level1": "المستوى الأول - فريق",
+  "melodies_level2": "المستوى الثاني - فريق",
+  "melodies_talented_individual": "مستوى الموهوبين - فردي",
+  "melodies_talented_group": "مستوى الموهوبين - جماعي",
+  "church_activities_big_theatre": "المسرح الكبير - فريق",
+  "church_activities_chorus": "الكورال - فريق",
+  "church_activities_cantata": "الكنتاتا - فريق",
+  "church_activities_coptic_theatre": "المسرح باللغة القبطية - فريق",
+  "church_activities_operetta": "الأوبريت - فريق",
+  "church_activities_solo_individual": "مسابقة الصولو - فردي",
+  "church_activities_music_individual": "مسابقة العزف - فردي",
+  "church_activities_solo_team": "مسابقة الصولو - جماعي",
+  "church_activities_music_team": "مسابقة العزف - جماعي",
+  "research_theoretical": "البحث النظري - فردي",
+  "research_cultural": "البحث الثقافي - فردي",
+  "cultural_magazine_paper": "إعداد مجلة ورقية - جماعي",
+  "cultural_magazine_wall": "إعداد مجلة حائط - جماعي",
+  "cultural_field_visits": "الزيارات الميدانية - جماعي",
+  "electronic_level1_individual": " الإلكترونيات المستوى الأول - فردي ",
+  "electronic_level2_individual": "الإلكترونيات المستوى الثاني - فردي",
+  "electronic_level1_group": " الإلكترونيات المستوى الأول - جماعي",
+  "electronic_level2_group": " الإلكترونيات المستوى الثاني - جماعي",
+  "arts_kindergarten_individual": " الفنون التشكيلة مرحلة حضانة - فردي",
+  "arts_grade1_2_individual": "فنون التشكيلة مرحلة أولى وثانية ابتدائي - فردي",
+  "arts_grade3_4_individual": "فنون التشكيلة مرحلة ثالثة ورابعة ابتدائي - فردي",
+  "arts_grade5_6_individual": "فنون التشكيلة مرحلة خامسة وسادسة ابتدائي - فردي",
+  "arts_kindergarten_group": "فنون التشكيلة مرحلة حضانة - جماعي",
+  "arts_grade1_2_group": "فنون التشكيلة مرحلة أولى وثانية ابتدائي - جماعي",
+  "arts_grade3_4_group": "فنون التشكيلة مرحلة ثالثة ورابعة ابتدائي - جماعي",
+  "arts_grade5_6_group": "فنون التشكيلة مرحلة خامسة وسادسة ابتدائي - جماعي",
+  "free_arts_kindergarten_individual": "إبداع حر - حضانة - فردي",
+  "free_arts_grade1_2_individual": "إبداع حر - أولى وثانية ابتدائي - فردي",
+  "free_arts_grade3_4_individual": "إبداع حر - ثالثة ورابعة ابتدائي - فردي",
+  "free_arts_grade5_6_individual": "إبداع حر - خامسة وسادسة ابتدائي - فردي",
+  "free_arts_kindergarten_group": "إبداع حر - حضانة - جماعي",
+  "free_arts_grade1_2_group": "إبداع حر - أولى وثانية ابتدائي - جماعي",
+  "free_arts_grade3_4_group": "إبداع حر - ثالثة ورابعة ابتدائي - جماعي",
+  "free_arts_grade5_6_group": "إبداع حر - خامسة وسادسة ابتدائي - جماعي",
+  "literary_poetry": "الشعر - فردي",
+  "literary_short_story": "القصة القصيرة - فردي",
+  "engineering_programming_mechanics_individual": "برمجة وكهرباء وميكانيكا - فردي",
+  "engineering_programming_mechanics_group": "برمجة وكهرباء وميكانيكا - جماعي",
+  "engineering_architecture_individual": "العمارة - فردي",
+  "engineering_architecture_group": "العمارة - جماعي",
+  "football_boys": "كرة القدم - بنين",
+  "football_girls": "كرة القدم - بنات",
+  "volleyball_boys": "الكرة الطائرة - بنين",
+  "volleyball_girls": "الكرة الطائرة - بنات",
+  "table_tennis_boys_individual": "تنس الطاولة - بنين - فردي",
+  "table_tennis_boys_team": "تنس الطاولة - بنين - جماعي",
+  "table_tennis_girls_individual": "تنس الطاولة - بنات - فردي",
+  "table_tennis_girls_team": "تنس الطاولة - بنات - جماعي",
+  "chess_boys_individual": "الشطرنج - بنين - فردي",
+  "chess_boys_team": "الشطرنج - بنين - جماعي",
+  "chess_girls_individual": "الشطرنج - بنات - فردي",
+  "chess_girls_team": "الشطرنج - بنات - جماعي",
+  "running_boys": "الجري - بنين - فردي",
+  "running_girls": "الجري - بنات - فردي"
+};
 
 const churches = [
   "كنيسة الشهيد العظيم مارمينا بفلمنج",
@@ -110,7 +178,6 @@ export default function ChurchDetailsAdminPage() {
   return (
     <div className="church-container">
       <h1 className="church-title">تفاصيل كل الكنائس</h1>
-
       <input
         type="text"
         placeholder="ابحث عن كنيسة..."
@@ -126,7 +193,6 @@ export default function ChurchDetailsAdminPage() {
           border: "1px solid #ccc",
         }}
       />
-
       <nav style={{
         display: "flex",
         flexWrap: "wrap",
@@ -154,7 +220,6 @@ export default function ChurchDetailsAdminPage() {
           </button>
         ))}
       </nav>
-
       {filteredChurches.map((church, idx) => {
         const dataForCount = church.competitions.filter(c => c.id !== "festival_subscription" && c.count > 0);
         const dataForPrice = church.competitions.filter(c => c.totalPrice > 0);
@@ -162,7 +227,6 @@ export default function ChurchDetailsAdminPage() {
           <div key={idx} id={`church-${idx}`} style={{ marginBottom: "80px" }}>
             <h2 className="church-title">{church.name}</h2>
             <h3 className="church-subtitle">الخادم المسؤول: {church.leaderName || "---"}</h3>
-
             <div className="church-table-wrapper">
               <table className="church-table">
                 <thead>
@@ -183,11 +247,9 @@ export default function ChurchDetailsAdminPage() {
                 </tbody>
               </table>
             </div>
-
             <p className="church-total">
               إجمالي التكلفة: <strong>{church.total.toLocaleString()} جـ</strong>
             </p>
-
             <div className="church-charts-container">
               <div className="church-chart">
                 <h3>نسبة عدد المشتركين</h3>
@@ -211,7 +273,6 @@ export default function ChurchDetailsAdminPage() {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-
               <div className="church-chart">
                 <h3>نسبة التكلفة لكل مسابقة</h3>
                 <ResponsiveContainer width="100%" height={300}>
