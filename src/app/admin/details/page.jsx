@@ -130,8 +130,10 @@ export default function ChurchDetailsAdminPage() {
   const [filteredChurches, setFilteredChurches] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
+
     const fetchAllData = async () => {
       const all = [];
 
@@ -176,20 +178,12 @@ export default function ChurchDetailsAdminPage() {
   }, [searchTerm, churchData]);
 
 const downloadExcel = async () => {
-  const exportData = [];
+  setDownloading(true); // ✅ بدأ التحميل
 
-  // 1. هات كل الليدرز الأول مرة واحدة
-  const leadersSnap = await getDocs(collection(db, "leaders"));
-  const leaders = leadersSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  const exportData = [];
 
   for (let name of churches) {
     let total = 0;
-    let competitions = [];
-
-    // 2. دور على الليدر اللي كنيسته = name
-    const leader = leaders.find((l) => l.church === name);
-    const leaderName = leader?.firstName +leader.lastName|| leader?.name || "---";
-
     const churchSnap = await getDoc(doc(db, "church_competitions", name));
     const otherSnap = await getDoc(doc(db, "other-competitions", name));
 
@@ -210,7 +204,6 @@ const downloadExcel = async () => {
       });
     });
 
-    // إجمالي الكنيسة
     exportData.push({
       "الكنيسة": name,
       "المسابقة": "إجمالي تكلفة الكنيسة",
@@ -218,10 +211,8 @@ const downloadExcel = async () => {
       "السعر الكلي": total,
     });
 
-    // فاصل
     exportData.push({
       "الكنيسة": "",
-      "الخادم": "",
       "المسابقة": "",
       "عدد المشاركين": "",
       "السعر الكلي": "",
@@ -232,7 +223,10 @@ const downloadExcel = async () => {
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "تفاصيل الكنائس");
   XLSX.writeFile(workbook, "تفاصيل_الكنائس.xlsx");
+
+  setDownloading(false); // ✅ انتهى التحميل
 };
+
 
 
 
@@ -246,19 +240,24 @@ const downloadExcel = async () => {
 
 <button
   onClick={downloadExcel}
+  disabled={downloading}
   style={{
-    background: "#198754",
+    background: downloading ? "#6c757d" : "#4f6ef7",
     color: "white",
     padding: "10px 16px",
     border: "none",
     borderRadius: "8px",
-    cursor: "pointer",
+    cursor: downloading ? "not-allowed" : "pointer",
     display: "block",
     margin: "0 auto 20px auto",
+    fontSize: "16px",
+    fontWeight: "bold",
+    transition: "all 0.3s ease",
   }}
 >
-  ⬇ Download Excel
+  {downloading ? "⏳ Downloading" : "⬇ download Excel"}
 </button>
+
 
 
        <input
