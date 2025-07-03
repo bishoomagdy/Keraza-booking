@@ -213,7 +213,6 @@ const downloadExcel = async () => {
     // إجمالي الكنيسة
     exportData.push({
       "الكنيسة": name,
-      "الخادم": leaderName,
       "المسابقة": "إجمالي تكلفة الكنيسة",
       "عدد المشاركين": "",
       "السعر الكلي": total,
