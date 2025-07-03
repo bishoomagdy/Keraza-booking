@@ -11,6 +11,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import * as XLSX from "xlsx";
 import "./page.css";
 
 const COLORS = [
@@ -19,6 +20,7 @@ const COLORS = [
 ];
 
 const competitionNamesInArabic = {
+  // نفس الداتا اللي انت كاتبها، متشالة بالكامل ومتسيبتش حاجة.
   "festival_subscription": "إشتراك حجز المهرجان للكنيسة (إلزامى)",
   "rouhi_alex_kindergarten_1": "مرحلة حضانة - الفريق الأول",
   "rouhi_alex_grade1_2_1": "مرحلة أولى وثانية ابتدائي - الفريق الأول",
@@ -112,7 +114,7 @@ const churches = [
   "جمعية الملاك ميخائيل محرم بك",
   "كنيسة العذراء مريم و ابونا سمعان الاخميمي بغربال",
   "كنيسة الشهيد العظيم مارجرجس بالحضرة",
-  "كنيسة القديس ابومقار و البابا كيرلس السادس بالدريسة",
+  "كنيسة القديس ابومقار و البابا كيرلس السادس بالدريسة"
 ];
 
 const getResponsiveRadius = () => {
@@ -173,12 +175,94 @@ export default function ChurchDetailsAdminPage() {
     setFilteredChurches(filtered);
   }, [searchTerm, churchData]);
 
+const downloadExcel = async () => {
+  const exportData = [];
+
+  // 1. هات كل الليدرز الأول مرة واحدة
+  const leadersSnap = await getDocs(collection(db, "leaders"));
+  const leaders = leadersSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+  for (let name of churches) {
+    let total = 0;
+    let competitions = [];
+
+    // 2. دور على الليدر اللي كنيسته = name
+    const leader = leaders.find((l) => l.church === name);
+    const leaderName = leader?.firstName +leader.lastName|| leader?.name || "---";
+
+    const churchSnap = await getDoc(doc(db, "church_competitions", name));
+    const otherSnap = await getDoc(doc(db, "other-competitions", name));
+
+    const data1 = churchSnap.exists() ? churchSnap.data().competitions : {};
+    const data2 = otherSnap.exists() ? otherSnap.data().competitions : {};
+    const allCompetitions = { ...data1, ...data2 };
+
+    Object.entries(allCompetitions).forEach(([key, value]) => {
+      const count = value.count || 0;
+      const price = value.totalPrice || 0;
+      total += price;
+
+      exportData.push({
+        "الكنيسة": name,
+        "المسابقة": competitionNamesInArabic[key] || key,
+        "عدد المشاركين": count,
+        "السعر الكلي": price,
+      });
+    });
+
+    // إجمالي الكنيسة
+    exportData.push({
+      "الكنيسة": name,
+      "الخادم": leaderName,
+      "المسابقة": "إجمالي تكلفة الكنيسة",
+      "عدد المشاركين": "",
+      "السعر الكلي": total,
+    });
+
+    // فاصل
+    exportData.push({
+      "الكنيسة": "",
+      "الخادم": "",
+      "المسابقة": "",
+      "عدد المشاركين": "",
+      "السعر الكلي": "",
+    });
+  }
+
+  const worksheet = XLSX.utils.json_to_sheet(exportData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "تفاصيل الكنائس");
+  XLSX.writeFile(workbook, "تفاصيل_الكنائس.xlsx");
+};
+
+
+
+
+
   if (loading) return <p className="church-loading">جاري التحميل...</p>;
 
   return (
     <div className="church-container">
       <h1 className="church-title">تفاصيل كل الكنائس</h1>
-      <input
+
+<button
+  onClick={downloadExcel}
+  style={{
+    background: "#198754",
+    color: "white",
+    padding: "10px 16px",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    display: "block",
+    margin: "0 auto 20px auto",
+  }}
+>
+  ⬇ Download Excel
+</button>
+
+
+       <input
         type="text"
         placeholder="ابحث عن كنيسة..."
         value={searchTerm}
