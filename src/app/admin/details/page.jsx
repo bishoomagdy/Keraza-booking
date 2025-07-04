@@ -178,7 +178,7 @@ export default function ChurchDetailsAdminPage() {
   }, [searchTerm, churchData]);
 
 const downloadExcel = async () => {
-  setDownloading(true); // ✅ بدأ التحميل
+  setDownloading(true); 
 
   const exportData = [];
 
@@ -224,7 +224,7 @@ const downloadExcel = async () => {
   XLSX.utils.book_append_sheet(workbook, worksheet, "تفاصيل الكنائس");
   XLSX.writeFile(workbook, "تفاصيل_الكنائس.xlsx");
 
-  setDownloading(false); // ✅ انتهى التحميل
+  setDownloading(false); 
 };
 
 
