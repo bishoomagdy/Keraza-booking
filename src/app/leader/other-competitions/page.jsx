@@ -18,39 +18,55 @@ const competitionsData = [
     sectionId: "rouhi_alex",
     sectionTitle: "مسابقة روحى الأسكندرية",
     items: [
-      { id: "rouhi_alex_kindergarten_1", name: "مرحلة حضانة - الفريق الأول", pricePerUnit: 100 , isTeamCheckbox: true },
-      { id: "rouhi_alex_grade1_2_1", name: "مرحلة أولى وثانية ابتدائي - الفريق الأول", pricePerUnit: 100 , isTeamCheckbox: true },
-      { id: "rouhi_alex_grade3_4_1", name: "مرحلة ثالثة ورابعة ابتدائي - الفريق الأول", pricePerUnit: 100 , isTeamCheckbox: true },
-      { id: "rouhi_alex_grade5_6_1", name: "مرحلة خامسة وسادسة ابتدائي - الفريق الأول", pricePerUnit: 100 , isTeamCheckbox: true },
-      { id: "rouhi_alex_kindergarten_extra", name: "مرحلة حضانة - الفريق الإضافي", pricePerUnit: 75 , isTeamCheckbox: true },
-      { id: "rouhi_alex_grade1_2_extra", name: "مرحلة أولى وثانية ابتدائي - الفريق الإضافي", pricePerUnit: 75 , isTeamCheckbox: true },
-      { id: "rouhi_alex_grade3_4_extra", name: "مرحلة ثالثة ورابعة ابتدائي - الفريق الإضافي", pricePerUnit: 75 , isTeamCheckbox: true },
-      { id: "rouhi_alex_grade5_6_extra", name: "مرحلة خامسة وسادسة ابتدائي - الفريق الإضافي", pricePerUnit: 75 , isTeamCheckbox: true },
+      { id: "rouhi_alex_kindergarten_1", name: "مرحلة حضانة - الفريق الأول", pricePerUnit: 100 , isTeamCheckbox: true,},
+      { id: "rouhi_alex_grade1_2_1", name: "مرحلة أولى وثانية ابتدائي - الفريق الأول", pricePerUnit: 100 , isTeamCheckbox: true, },
+      { id: "rouhi_alex_grade3_4_1", name: "مرحلة ثالثة ورابعة ابتدائي - الفريق الأول", pricePerUnit: 100 , isTeamCheckbox: true, },
+      { id: "rouhi_alex_grade5_6_1", name: "مرحلة خامسة وسادسة ابتدائي - الفريق الأول", pricePerUnit: 100 , isTeamCheckbox: true, },
+      { id: "rouhi_alex_kindergarten_extra", name: "مرحلة حضانة - الفريق الإضافي", pricePerUnit: 75 , countLabel: "عدد الفرق" },
+      { id: "rouhi_alex_grade1_2_extra", name: "مرحلة أولى وثانية ابتدائي - الفريق الإضافي", pricePerUnit: 75 ,countLabel: "عدد الفرق" },
+      { id: "rouhi_alex_grade3_4_extra", name: "مرحلة ثالثة ورابعة ابتدائي - الفريق الإضافي", pricePerUnit: 75 ,countLabel: "عدد الفرق" },
+      { id: "rouhi_alex_grade5_6_extra", name: "مرحلة خامسة وسادسة ابتدائي - الفريق الإضافي", pricePerUnit: 75 , countLabel: "عدد الفرق" },
     ],
   },
   {
     sectionId: "melodies",
     sectionTitle: "مسابقة الألحان والتسبحة",
     items: [
-      { id: "melodies_level1", name: "المستوى الأول - فريق", pricePerUnit: 150 },
-      { id: "melodies_level2", name: "المستوى الثاني - فريق", pricePerUnit: 150 },
-      { id: "melodies_talented_individual", name: "مستوي الموهوبين - فردي", pricePerUnit: 50 },
-      { id: "melodies_talented_group", name: "مستوي الموهوبين - جماعي", pricePerUnit: 150 },
+      { id: "melodies_level1_Hadana", name: "المستوى الأول - فريق حضانة", pricePerUnit: 150, countLabel: "عدد الفرق" },
+      { id: "melodies_level2_Hadana", name: " المستوى الثاني - فريق حضانة", pricePerUnit: 150, countLabel: "عدد الفرق" },
+
+      { id: "melodies_level1_grades12", name: "المستوى الأول - فريق اولى وثانية", pricePerUnit: 150, countLabel: "عدد الفرق" },
+      { id: "melodies_level2_grades12", name: "المستوى الثاني - فريق اولى وثانية", pricePerUnit: 150, countLabel: "عدد الفرق" },
+
+      { id: "melodies_level1_grades34", name: "المستوى الأول - فريق ثالثة ورابعة", pricePerUnit: 150, countLabel: "عدد الفرق" },
+      { id: "melodies_level2_grades34", name: "المستوى الثاني - فريق ثالثة ورابعة", pricePerUnit: 150, countLabel: "عدد الفرق" },
+      
+      { id: "melodies_level1_grades56", name: "المستوى الأول - فريق خامسة وسادسة", pricePerUnit: 150, countLabel: "عدد الفرق" },
+      { id: "melodies_level2_grades56", name: "المستوى الثاني - فريق خامسة وسادسة", pricePerUnit: 150, countLabel: "عدد الفرق" },
+      
+      { id: "melodies_talented_individual_Hadana", name: "مستوي الموهوبين حضانة - فردي", pricePerUnit: 50 },
+      { id: "melodies_talented_group_Hadana", name: "مستوي الموهوبين حضانة - جماعي", pricePerUnit: 150, countLabel: "عدد الفرق" },
+      { id: "melodies_talented_individual_grades12", name: "مستوي الموهوبين اولى وثانية- فردي", pricePerUnit: 50 },
+      { id: "melodies_talented_group_grades12", name: "مستوي الموهوبين اولى وثانية - جماعي", pricePerUnit: 150, countLabel: "عدد الفرق" },
+      { id: "melodies_talented_individual_grades34", name: "مستوي الموهوبين ثالثة ورابعة - فردي", pricePerUnit: 50 },
+      { id: "melodies_talented_group_grades34", name: "مستوي الموهوبين ثالثة ورابعة - جماعي", pricePerUnit: 150, countLabel: "عدد الفرق" },
+      { id: "melodies_talented_individual_grades56", name: "مستوي الموهوبين خامسة وسادسة - فردي", pricePerUnit: 50 },
+      { id: "melodies_talented_group_grades56", name: "مستوي الموهوبين خامسةوسادسة - جماعي", pricePerUnit: 150, countLabel: "عدد الفرق" },
     ],
   },
-  {
+    {
     sectionId: "church_activities",
     sectionTitle: "مسابقة الأنشطة الكنسية",
     items: [
-      { id: "church_activities_big_theatre", name: "المسرح الكبير - فريق", pricePerUnit: 500 },
-      { id: "church_activities_chorus", name: "الكورال - فريق", pricePerUnit: 500 },
-      { id: "church_activities_cantata", name: "الكنتاتا - فريق", pricePerUnit: 500 },
-      { id: "church_activities_coptic_theatre", name: "المسرح باللغة القبطية - فريق", pricePerUnit: 500 },
-      { id: "church_activities_operetta", name: "الأوبريت - فريق", pricePerUnit: 500 },
+      { id: "church_activities_big_theatre", name: "المسرح الكبير - فريق", pricePerUnit: 500 ,isTeamCheckbox: true},
+      { id: "church_activities_chorus", name: "الكورال - فريق", pricePerUnit: 500 ,isTeamCheckbox: true},
+      { id: "church_activities_cantata", name: "الكنتاتا - فريق", pricePerUnit: 500 ,isTeamCheckbox: true},
+      { id: "church_activities_coptic_theatre", name: "المسرح باللغة القبطية - فريق", pricePerUnit: 500 ,isTeamCheckbox: true},
+      { id: "church_activities_operetta", name: "الأوبريت - فريق", pricePerUnit: 500 ,isTeamCheckbox: true},
       { id: "church_activities_solo_individual", name: "مسابقة الصولو - فردي", pricePerUnit: 50 },
       { id: "church_activities_music_individual", name: "مسابقة العزف - فردي", pricePerUnit: 50 },
-      { id: "church_activities_solo_team", name: "مسابقة الصولو - جماعي", pricePerUnit: 200 },
-      { id: "church_activities_music_team", name: "مسابقة العزف - جماعي", pricePerUnit: 200 },
+      { id: "church_activities_solo_team", name: "مسابقة الصولو - جماعي", pricePerUnit: 200 ,isTeamCheckbox: true},
+      { id: "church_activities_music_team", name: "مسابقة العزف - جماعي", pricePerUnit: 200 ,isTeamCheckbox: true},
     ],
   },
   {
@@ -127,6 +143,7 @@ const competitionsData = [
     ],
   },
 ];
+
 
 export default function OtherCompetitionsPage() {
   const [userChurch, setUserChurch] = useState(null);
@@ -285,7 +302,7 @@ export default function OtherCompetitionsPage() {
         <section key={sectionId} id={sectionId} className="other-section">
           <h2 className="other-section-title">{sectionTitle}</h2>
           <div className="other-cards">
-            {items.map(({ id, name, pricePerUnit, isTeamCheckbox }) => {
+            {items.map(({ id, name, pricePerUnit, isTeamCheckbox, countLabel }) => {
               const isFestival = id === "festival_subscription";
               const competitionCount = counts.competitions[id]?.count || 0;
               return (
@@ -334,7 +351,7 @@ export default function OtherCompetitionsPage() {
                     )}
                     {competitionCount > 0 && (
                       <p className="other-count-info">
-                        {isTeamCheckbox ? "المشاركة:" : "عدد المشتركين:"} <strong>{competitionCount}</strong> - التكلفة: <strong>{counts.competitions[id].totalPrice.toLocaleString()} جـ</strong>
+                        {countLabel || (isTeamCheckbox ? "المشاركة:" : "عدد المشتركين:")} <strong>{competitionCount}</strong> - التكلفة: <strong>{counts.competitions[id].totalPrice.toLocaleString()} جـ</strong>
                       </p>
                     )}
                   </div>
