@@ -144,7 +144,6 @@ const competitionsData = [
   },
 ];
 
-
 export default function OtherCompetitionsPage() {
   const [userChurch, setUserChurch] = useState(null);
   const [counts, setCounts] = useState({ competitions: {}, totalPayment: 0 });
@@ -331,7 +330,7 @@ export default function OtherCompetitionsPage() {
                             setInputs((prev) => ({ ...prev, [id]: inputs[id] ?? "" }))
                           }
                         >
-                          إضافة عدد المشتركين
+                          ادخل {countLabel ? countLabel : "عدد المشتركين"}
                         </button>
                         {inputs[id] !== undefined && (
                           <div className="other-input-wrapper">
@@ -340,7 +339,7 @@ export default function OtherCompetitionsPage() {
                               inputMode="numeric"
                               pattern="[0-9]*"
                               className="other-input"
-                              placeholder="ادخل عدد المشتركين"
+                              placeholder={`ادخل ${countLabel ? countLabel : "عدد المشتركين"}`}
                               value={inputs[id]}
                               onChange={(e) => handleInputChange(id, e.target.value)}
                             />
@@ -351,7 +350,9 @@ export default function OtherCompetitionsPage() {
                     )}
                     {competitionCount > 0 && (
                       <p className="other-count-info">
-                        {countLabel || (isTeamCheckbox ? "المشاركة:" : "عدد المشتركين:")} <strong>{competitionCount}</strong> - التكلفة: <strong>{counts.competitions[id].totalPrice.toLocaleString()} جـ</strong>
+                        {countLabel ? `${countLabel}:` : isTeamCheckbox ? "المشاركة:" : "عدد المشتركين:"} {" "}
+                        <strong>{competitionCount}</strong> - التكلفة: {" "}
+                        <strong>{counts.competitions[id].totalPrice.toLocaleString()} جـ</strong>
                       </p>
                     )}
                   </div>

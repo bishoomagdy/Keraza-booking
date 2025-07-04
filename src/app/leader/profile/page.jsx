@@ -1,55 +1,19 @@
 "use client";
 
-import "./page.css";
-import { useState, useEffect } from "react";
-import { db, auth } from "@/lib/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, serverTimestamp, getDoc } from "firebase/firestore";
-import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
+import SelectChurch from "@/components/SelectChurch";
+import "./page.css";
 
-// ✅ تحميل ديناميكي لمكون SelectChurch عشان يمنع مشاكل الـ SSR
-const SelectChurch = dynamic(() => import("@/components/SelectChurch"), { ssr: false });
-
-export default function RegisterPage() {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    phone: "",
-    church: "",
-    grade: "",
-    gender: "",
-  });
-
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState(""); // success | error
+export default function LeaderProfile() {
+  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({});
   const router = useRouter();
-
-  useEffect(() => {
-    const checkUserApproval = async () => {
-      auth.onAuthStateChanged(async (user) => {
-        if (user) {
-          const docRef = doc(db, "leaders", user.uid);
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists()) {
-            const data = docSnap.data();
-
-            if (data.role === "admin") {
-              router.push("/admin/pending");
-            } else if (data.approved === true) {
-              router.push("/leader/profile");
-            } else {
-              router.push("/waiting");
-            }
-          }
-        }
-      });
-    };
-    checkUserApproval();
-  }, [router]);
 
   const churches = [
     "كنيسة الشهيد العظيم مارمينا بفلمنج",
@@ -78,105 +42,104 @@ export default function RegisterPage() {
     "كنيسة القديس ابومقار و البابا كيرلس السادس بالدريسة",
   ];
 
-  const grades = [
-    "أولى حضانة",
-    "تانية حضانة",
-    "أولى ابتدائي",
-    "تانية ابتدائي",
-    "تالتة ابتدائي",
-    "رابعة ابتدائي",
-    "خامسة ابتدائي",
-    "سادسة ابتدائي",
-  ];
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        router.push("/register");
+        return;
+      }
 
-  const handleChange = (e) => {
+      const docRef = doc(db, "leaders", user.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        router.push("/register");
+        return;
+      }
+
+      const data = docSnap.data();
+
+      if (data.approved === false) {
+        router.push("/waiting");
+        return;
+      }
+
+      setUserData(data);
+      setFormData({
+        phone: data.phone || "",
+        church: data.church || "",
+      });
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
+  const handleEditChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
-    setMessageType("");
-
-    try {
-      const {
-        firstName, lastName, email, password, phone, church, grade, gender,
-      } = formData;
-
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      const leaderData = {
-        firstName, lastName, email, phone, church, grade, gender,
-        approved: false,
-        role: "leader",
-        createdAt: serverTimestamp(),
-      };
-
-      await setDoc(doc(db, "leaders", user.uid), leaderData);
-
-      setMessage("✅ تم إنشاء الحساب! برجاء الانتظار للموافقة.");
-      setMessageType("success");
-
-      setFormData({
-        firstName: "", lastName: "", email: "", password: "",
-        phone: "", church: "", grade: "", gender: "",
-      });
-
-      router.push("/waiting");
-
-    } catch (err) {
-      console.error(err);
-      if (err.code === "auth/email-already-in-use") {
-        setMessage("❌ الإيميل ده متسجل قبل كده. جرّب تستخدم إيميل مختلف.");
-      } else if (err.code === "auth/weak-password") {
-        setMessage("❌ كلمة السر ضعيفة. لازم تكون 6 حروف أو أكتر.");
-      } else {
-        setMessage("❌ حصل خطأ أثناء التسجيل. حاول مرة تانية.");
-      }
-      setMessageType("error");
-    }
-
-    setLoading(false);
+  const handleSave = async () => {
+    if (!auth.currentUser) return;
+    const docRef = doc(db, "leaders", auth.currentUser.uid);
+    await updateDoc(docRef, formData);
+    setUserData((prev) => ({ ...prev, ...formData }));
+    setEditMode(false);
   };
 
+  if (loading) return <p className="loading">جاري التحميل...</p>;
+
   return (
-    <div className="reg-container">
-      <h1 className="reg-title">تسجيل حساب خادم</h1>
-      <form onSubmit={handleSubmit} className="reg-form">
-        <input type="text" name="firstName" placeholder="الاسم الأول"
-          value={formData.firstName} onChange={handleChange} required className="reg-input" />
-        <input type="text" name="lastName" placeholder="الاسم الأخير"
-          value={formData.lastName} onChange={handleChange} required className="reg-input" />
-        <input type="tel" name="phone" placeholder="رقم التليفون"
-          value={formData.phone} onChange={handleChange} required className="reg-input" />
-        <input type="email" name="email" placeholder="البريد الإلكتروني"
-          value={formData.email} onChange={handleChange} required className="reg-input" />
-        <input type="password" name="password" placeholder="كلمة المرور"
-          value={formData.password} onChange={handleChange} required className="reg-input" />
+    <div className="profile-container">
+      <h1 className="profile-title">الملف الشخصي للخادم</h1>
+      <div className="profile-card">
+        <p><span className="profile-label">الاسم:</span> <span className="profile-value">{userData.firstName} {userData.lastName}</span></p>
+        <p><span className="profile-label">الإيميل:</span> <span className="profile-value">{userData.email}</span></p>
 
-        <SelectChurch
-          options={churches.map((ch) => ({ value: ch, label: ch }))}
-          onChange={(value) => setFormData({ ...formData, church: value })}
-        />
+        {editMode ? (
+          <>
+            <div className="profile-field">
+              <span className="profile-label">رقم التليفون:</span>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleEditChange}
+                className="edit-input"
+              />
+            </div>
 
-        <button type="submit" disabled={loading} className="reg-button">
-          {loading ? "جارٍ التسجيل..." : "تسجيل الحساب"}
-        </button>
+            <div className="profile-field">
+              <span className="profile-label">الكنيسة:</span>
+              <SelectChurch
+                options={churches.map((ch) => ({ value: ch, label: ch }))}
+                onChange={(value) => setFormData({ ...formData, church: value })}
+                defaultValue={{ value: formData.church, label: formData.church }}
+              />
+            </div>
 
-        {message && (
-          <p className={`reg-message ${messageType === "success" ? "success" : "error"}`}>
-            {message}
-          </p>
+
+          </>
+        ) : (
+          <>
+            <p><span className="profile-label">التليفون:</span> <span className="profile-value">{userData.phone}</span></p>
+            <p><span className="profile-label">الكنيسة:</span> <span className="profile-value">{userData.church}</span></p>
+          </>
         )}
 
-        {/* ✅ لينك تسجيل الدخول */}
-        <p className="reg-note">
-          لديك حساب بالفعل؟{" "}
-          <a href="/login" className="reg-link">سجّل الدخول من هنا</a>
-        </p>
-      </form>
+        <p><span className="profile-label">تاريخ التسجيل:</span> <span className="profile-value">{userData.createdAt?.toDate().toLocaleDateString("ar-EG")}</span></p>
+
+        <div style={{ marginTop: "20px" }}>
+          {editMode ? (
+            <>
+              <button className="profile-button save" onClick={handleSave}>💾 حفظ التعديلات</button>
+              <button className="profile-button cancel" onClick={() => setEditMode(false)}>❌ إلغاء</button>
+            </>
+          ) : (
+            <button className="profile-button edit" onClick={() => setEditMode(true)}>✏️ تعديل البيانات</button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
