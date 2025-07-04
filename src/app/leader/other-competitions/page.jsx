@@ -6,9 +6,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 import "./page.css";
 
-// competitionsData زي ما هي بدون تغيير
 const competitionsData = [
-  // قسّم المسابقات بحسب النوع عشان نعرضها مع h2
   {
     sectionId: "festival",
     sectionTitle: "اشتراك حجز المهرجان",

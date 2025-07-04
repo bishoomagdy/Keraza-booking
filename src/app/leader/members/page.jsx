@@ -21,7 +21,6 @@ export default function LeaderMembersPage() {
         console.log("✅ Logged in as:", currentUser.uid);
 
         try {
-          // جلب بيانات الليدر من مستند uid في collection leaders
           const docRef = doc(db, "leaders", currentUser.uid);
           const docSnap = await getDoc(docRef);
 
@@ -35,7 +34,6 @@ export default function LeaderMembersPage() {
                 grade: userData.grade || "غير محددة",
               });
 
-              // جلب أعضاء المخدومين المرتبطين بالليدر
               const mQuery = query(
                 collection(db, "members"),
                 where("leaderId", "==", currentUser.uid)

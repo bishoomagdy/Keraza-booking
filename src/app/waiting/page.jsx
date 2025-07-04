@@ -29,7 +29,6 @@ export default function WaitingPage() {
 
       const data = docSnap.data();
 
-      // ✅ لو اتوافق عليه نوديه للصفحة الصح حسب الـ role
       if (data.approved === true) {
         if (data.role === "admin") {
           router.push("/admin/pending");
@@ -42,7 +41,6 @@ export default function WaitingPage() {
       }
     });
 
-    // ✅ Cleanup لما الكومبوننت يتقفل
     return () => unsubscribe();
   }, [router]);
 

@@ -63,12 +63,10 @@ export default function ChurchesPage() {
 const handlePaidToggle = async (id, current) => {
   if (!id) return;
 
-  // ✅ تحديث قيمة الدفع في كولكشن leaders
   await updateDoc(doc(db, "leaders", id), {
     paid: !current,
   });
 
-  // ✅ تحديث في كولكشن الكنائس
   const updatedChurch = data.find((item) => item.id === id);
   if (updatedChurch) {
     await updateDoc(doc(db, "churches", updatedChurch.church), {
@@ -76,7 +74,6 @@ const handlePaidToggle = async (id, current) => {
     });
   }
 
-  // ✅ تحديث في واجهة المستخدم
   setData((prev) =>
     prev.map((item) =>
       item.id === id ? { ...item, paid: !current } : item

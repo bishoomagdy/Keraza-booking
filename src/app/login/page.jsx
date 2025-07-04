@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState(""); // success | error
+  const [messageType, setMessageType] = useState(""); 
   const router = useRouter();
 
   useEffect(() => {

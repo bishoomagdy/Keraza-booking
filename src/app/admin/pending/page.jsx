@@ -20,7 +20,6 @@ export default function PendingLeadersPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // ✅ حماية المسار
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
@@ -36,7 +35,6 @@ export default function PendingLeadersPage() {
         return;
       }
 
-      // ✅ لو أدمن، حمّل البيانات
       fetchPending();
     });
 

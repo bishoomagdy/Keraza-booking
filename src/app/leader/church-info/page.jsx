@@ -14,13 +14,11 @@ import {
 } from "recharts";
 import "./page.css";
 
-// ألوان الشارت
 const COLORS = [
   "#0088FE", "#00C49F", "#FFBB28", "#FF8042",
   "#b455f0", "#e35f5f", "#40a965", "#f58f00"
 ];
 
-// خريطة أسماء المسابقات بالعربي
 const competitionNamesInArabic = {
   // اشتراك المهرجان
   "festival_subscription": "إشتراك حجز المهرجان للكنيسة (إلزامى)",
@@ -161,7 +159,6 @@ export default function ChurchInfoPage() {
           });
         }
 
-        // بيانات مسابقات أخرى
         const otherDoc = await getDoc(doc(db, "other-competitions", church));
         if (otherDoc.exists()) {
           const data = otherDoc.data().competitions || {};
