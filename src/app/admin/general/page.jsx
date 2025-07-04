@@ -1,4 +1,3 @@
-// ✅ File: app/admin/general/page.jsx
 "use client";
 
 import { useEffect, useState } from "react";
